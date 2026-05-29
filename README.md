@@ -11,6 +11,7 @@ A professional Python package for integrating with **SteadFast Courier API**. Th
 
 - ✅ **Complete API Coverage** - All SteadFast Courier API endpoints implemented
 - ✅ **Multi-Framework Support** - Django, FastAPI, Flask, and any Python framework
+- ✅ **Environment Variable Support** - Secure credential management with `.env` files via `from_env()` method
 - ✅ **API Key Authentication** - Secure authentication with API Key and Secret Key
 - ✅ **Rate Limiting** - Built-in protection against API abuse (configurable)
 - ✅ **Input Validation** - Comprehensive validation before API calls
@@ -35,7 +36,7 @@ pip install steadfast-courier
 
 ## ⚙️ Configuration
 
-### Environment Variables
+### Setup Environment Variables
 
 Create a `.env` file in your project root:
 
@@ -46,16 +47,51 @@ STEADFAST_BASE_URL=https://portal.packzy.com/api/v1  # Optional
 STEADFAST_TIMEOUT=30  # Optional
 ```
 
-**Note:** You can obtain your API credentials from the [SteadFast Courier Portal](https://steadfast.com.bd/).
+Or copy the provided template:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` with your credentials. **Note:** You can obtain your API credentials from the [SteadFast Courier Portal](https://steadfast.com.bd/).
 
 ## 🚀 Quick Start
 
-### Basic Usage
+### Option 1: Using Environment Variables (Recommended)
+
+```python
+from steadfast_courier import SteadfastCourier
+from dotenv import load_dotenv
+
+# Load environment variables from .env
+load_dotenv()
+
+# Initialize client from environment variables
+client = SteadfastCourier.from_env()
+
+# Place an order
+order_data = {
+    'invoice': 'ORD-123456',
+    'recipient_name': 'John Doe',
+    'recipient_phone': '01712345678',
+    'recipient_address': 'House 44, Road 2/A, Dhanmondi, Dhaka 1209',
+    'cod_amount': 1000.00,
+    'note': 'Handle with care',
+}
+
+try:
+    response = client.order().place_order(order_data)
+    print(f"Order created! Consignment ID: {response['consignment']['consignment_id']}")
+except Exception as e:
+    print(f"Error: {e}")
+```
+
+### Option 2: Using Explicit Credentials
 
 ```python
 from steadfast_courier import SteadfastCourier
 
-# Initialize the client
+# Initialize the client with explicit credentials
 client = SteadfastCourier(
     api_key='your-api-key',
     secret_key='your-secret-key'
@@ -83,19 +119,16 @@ except Exception as e:
 See [Django Integration Guide](docs/DJANGO_SETUP.md)
 
 ```python
-# settings.py
-STEADFAST_API_KEY = 'your-api-key'
-STEADFAST_SECRET_KEY = 'your-secret-key'
+# settings.py - Add at the top
+from dotenv import load_dotenv
+load_dotenv()
 
 # views.py
 from steadfast_courier import SteadfastCourier
-from django.conf import settings
 
 def create_order(request):
-    client = SteadfastCourier(
-        api_key=settings.STEADFAST_API_KEY,
-        secret_key=settings.STEADFAST_SECRET_KEY
-    )
+    # Initialize from environment variables
+    client = SteadfastCourier.from_env()
 
     order_data = {
         'invoice': f'ORD-{request.POST.get("invoice")}',
@@ -119,14 +152,15 @@ See [FastAPI Integration Guide](docs/FASTAPI_SETUP.md)
 ```python
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from dotenv import load_dotenv
 from steadfast_courier import SteadfastCourier
+
+load_dotenv()
 
 app = FastAPI()
 
-STEADFAST_CLIENT = SteadfastCourier(
-    api_key='your-api-key',
-    secret_key='your-secret-key'
-)
+# Initialize client from environment variables
+STEADFAST_CLIENT = SteadfastCourier.from_env()
 
 class OrderRequest(BaseModel):
     invoice: str
@@ -150,14 +184,15 @@ See [Flask Integration Guide](docs/FLASK_SETUP.md)
 
 ```python
 from flask import Flask, request, jsonify
+from dotenv import load_dotenv
 from steadfast_courier import SteadfastCourier
+
+load_dotenv()
 
 app = Flask(__name__)
 
-client = SteadfastCourier(
-    api_key='your-api-key',
-    secret_key='your-secret-key'
-)
+# Initialize client from environment variables
+client = SteadfastCourier.from_env()
 
 @app.route('/orders', methods=['POST'])
 def create_order():

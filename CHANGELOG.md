@@ -2,6 +2,34 @@
 
 All notable changes to the SteadFast Courier Python package will be documented in this file.
 
+## [1.1.0] - 2024-05-29
+
+### Added
+
+#### Environment Variable Support
+
+- **`from_env()` Class Method** - Initialize client directly from environment variables
+- **Standard Environment Variables** - Support for `STEADFAST_API_KEY`, `STEADFAST_SECRET_KEY`, `STEADFAST_BASE_URL`, `STEADFAST_TIMEOUT`
+- **.env.example Template** - Provided template file for easy setup
+- **Customizable Variable Names** - Support for custom environment variable names via `from_env()` parameters
+
+#### Documentation Updates
+
+- Updated all framework guides (Django, FastAPI, Flask) to showcase environment variable usage
+- Updated all examples to demonstrate `from_env()` method
+- Enhanced README with new quick start using environment variables
+
+### Changed
+
+- README updated to show `from_env()` as the recommended approach
+- Django, FastAPI, and Flask integration examples now use environment variables
+- Documentation clarified for easier credential management
+
+### Notes
+
+- **Backward Compatible** - All existing code using explicit credentials continues to work
+- No breaking changes to the API
+
 ## [1.0.0] - 2024-05-29
 
 ### Added
