@@ -109,8 +109,9 @@ class BaseApi:
         # Check rate limit
         self._check_rate_limit(endpoint)
         
-        # Prepare URL
-        url = urljoin(self.base_url, endpoint.lstrip('/'))
+        # Prepare URL - ensure base_url ends with / for proper urljoin behavior
+        base_url_with_slash = self.base_url if self.base_url.endswith('/') else self.base_url + '/'
+        url = urljoin(base_url_with_slash, endpoint.lstrip('/'))
         
         # Prepare headers
         headers = {
