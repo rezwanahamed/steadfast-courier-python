@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "steadfast-courier"
+version = "1.0.0"
+description = "Professional Python package for SteadFast Courier API integration"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+authors = [
+    {name = "Rezwan Ahamed", email = "rezwan@example.com"},
+]
+keywords = [
+    "steadfast",
+    "courier",
+    "api",
+    "shipping",
+    "logistics",
+    "delivery",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Framework :: Django",
+    "Framework :: FastAPI",
+    "Framework :: Flask",
+]
+dependencies = [
+    "requests>=2.28.0",
+]
+
+[project.urls]
+"Bug Reports" = "https://github.com/rezwanahamed/steadfast-courier-python/issues"
+"Source" = "https://github.com/rezwanahamed/steadfast-courier-python"
+"Documentation" = "https://github.com/rezwanahamed/steadfast-courier-python/blob/main/README.md"
+"Author" = "https://github.com/rezwanahamed"
