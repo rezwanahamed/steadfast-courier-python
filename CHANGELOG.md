@@ -2,6 +2,13 @@
 
 All notable changes to the SteadFast Courier Python package will be documented in this file.
 
+## [1.1.1] - 2024-05-29
+
+### Changed
+
+- Updated README with improved documentation and examples
+- Enhanced setup instructions and quick start guide
+
 ## [1.1.0] - 2024-05-29
 
 ### Added
