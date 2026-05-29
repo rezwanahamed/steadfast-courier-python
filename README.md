@@ -116,7 +116,7 @@ except Exception as e:
 
 ### Django Integration
 
-See [Django Integration Guide](docs/DJANGO_SETUP.md)
+See [Django Integration Guide](https://github.com/rezwanahamed/steadfast-courier-python/tree/main/docs/DJANGO_SETUP.md)
 
 ```python
 # settings.py - Add at the top
@@ -147,7 +147,7 @@ def create_order(request):
 
 ### FastAPI Integration
 
-See [FastAPI Integration Guide](docs/FASTAPI_SETUP.md)
+See [FastAPI Integration Guide](https://github.com/rezwanahamed/steadfast-courier-python/tree/main/docs/FASTAPI_SETUP.md)
 
 ```python
 from fastapi import FastAPI, HTTPException
@@ -180,7 +180,7 @@ async def create_order(order: OrderRequest):
 
 ### Flask Integration
 
-See [Flask Integration Guide](docs/FLASK_SETUP.md)
+See [Flask Integration Guide](https://github.com/rezwanahamed/steadfast-courier-python/tree/main/docs/FLASK_SETUP.md)
 
 ```python
 from flask import Flask, request, jsonify
@@ -378,10 +378,10 @@ if __name__ == '__main__':
 
 ## 📞 Support
 
-- Documentation: [See USAGE.md](docs/USAGE.md)
+- Documentation: [See USAGE.md](https://github.com/rezwanahamed/steadfast-courier-python/tree/main/docs/USAGE.md)
 - Issue Tracking: [GitHub Issues](https://github.com/rezwanahamed/steadfast-courier-python/issues)
 - Developer: [Rezwan Ahamed](https://github.com/rezwanahamed)
-- Official API Docs: [SteadFast API Documentation](https://steadfast.com.bd/)
+- Official API Docs: [SteadFast API Documentation](https://packagist.org/packages/nayemuf/steadfast-courier)
 
 ## 📄 License
 
