@@ -31,6 +31,8 @@ touch config.py main.py
 
 ### .env File
 
+Create a `.env` file in your project root:
+
 ```env
 STEADFAST_API_KEY=your-api-key
 STEADFAST_SECRET_KEY=your-secret-key
@@ -39,7 +41,49 @@ STEADFAST_TIMEOUT=30
 FLASK_ENV=development
 ```
 
-### config.py
+Or copy the provided template:
+
+```bash
+cp .env.example .env
+```
+
+### config.py (Option 1: Simple Setup - Recommended)
+
+```python
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+class Config:
+    """Base configuration"""
+    JSON_SORT_KEYS = False
+    DEBUG = False
+
+class DevelopmentConfig(Config):
+    """Development configuration"""
+    DEBUG = True
+
+class ProductionConfig(Config):
+    """Production configuration"""
+    DEBUG = False
+
+config = {
+    'development': DevelopmentConfig,
+    'production': ProductionConfig,
+    'default': DevelopmentConfig
+}
+```
+
+Then in your routes, use:
+
+```python
+from steadfast_courier import SteadfastCourier
+
+client = SteadfastCourier.from_env()
+```
+
+### config.py (Option 2: Detailed Setup)
 
 ```python
 import os

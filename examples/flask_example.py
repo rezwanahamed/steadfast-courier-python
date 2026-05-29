@@ -5,17 +5,21 @@ import os
 
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
+
 from steadfast_courier import SteadfastCourier, SteadfastException
 
 load_dotenv()
 
 app = Flask(__name__)
 
-# Initialize client
-client = SteadfastCourier(
-    api_key=os.getenv('STEADFAST_API_KEY'),
-    secret_key=os.getenv('STEADFAST_SECRET_KEY')
-)
+# Initialize client from environment variables
+client = SteadfastCourier.from_env()
+
+# Alternative: Initialize with explicit credentials
+# client = SteadfastCourier(
+#     api_key=os.getenv('STEADFAST_API_KEY'),
+#     secret_key=os.getenv('STEADFAST_SECRET_KEY')
+# )
 
 @app.route('/')
 def home():

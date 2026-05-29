@@ -7,6 +7,7 @@ from typing import Optional
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException
 from pydantic import BaseModel, Field
+
 from steadfast_courier import SteadfastCourier, SteadfastException
 
 load_dotenv()
@@ -16,11 +17,14 @@ app = FastAPI(
     description="SteadFast Courier API Integration with FastAPI"
 )
 
-# Initialize client
-client = SteadfastCourier(
-    api_key=os.getenv('STEADFAST_API_KEY'),
-    secret_key=os.getenv('STEADFAST_SECRET_KEY')
-)
+# Initialize client from environment variables
+client = SteadfastCourier.from_env()
+
+# Alternative: Initialize with explicit credentials
+# client = SteadfastCourier(
+#     api_key=os.getenv('STEADFAST_API_KEY'),
+#     secret_key=os.getenv('STEADFAST_SECRET_KEY')
+# )
 
 # Pydantic models
 class OrderRequest(BaseModel):

@@ -4,16 +4,20 @@
 import os
 
 from dotenv import load_dotenv
+
 from steadfast_courier import SteadfastCourier, SteadfastException
 
-# Load environment variables
+# Load environment variables from .env file
 load_dotenv()
 
-# Initialize client
-client = SteadfastCourier(
-    api_key=os.getenv('STEADFAST_API_KEY'),
-    secret_key=os.getenv('STEADFAST_SECRET_KEY')
-)
+# Initialize client from environment variables (Recommended)
+client = SteadfastCourier.from_env()
+
+# Alternative: Initialize with explicit credentials
+# client = SteadfastCourier(
+#     api_key=os.getenv('STEADFAST_API_KEY'),
+#     secret_key=os.getenv('STEADFAST_SECRET_KEY')
+# )
 
 # Example 1: Create a single order
 print("=== Example 1: Create Single Order ===")

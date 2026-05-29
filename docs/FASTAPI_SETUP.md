@@ -30,6 +30,8 @@ touch main.py
 
 ### .env File
 
+Create a `.env` file in your project root:
+
 ```env
 STEADFAST_API_KEY=your-api-key
 STEADFAST_SECRET_KEY=your-secret-key
@@ -37,7 +39,13 @@ STEADFAST_BASE_URL=https://portal.packzy.com/api/v1
 STEADFAST_TIMEOUT=30
 ```
 
-### config.py
+Or copy the provided template:
+
+```bash
+cp .env.example .env
+```
+
+### config.py (Optional)
 
 ```python
 import os
@@ -57,7 +65,36 @@ settings = Settings()
 
 ## Basic Setup
 
-### main.py
+### main.py (Option 1: Simple - Recommended)
+
+```python
+from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field
+from typing import Optional
+from steadfast_courier import SteadfastCourier, SteadfastException
+import logging
+
+# Load environment variables
+load_dotenv()
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+app = FastAPI(
+    title="Courier Management API",
+    description="SteadFast Courier API Integration",
+    version="1.0.0"
+)
+
+# Initialize client from environment variables
+def get_steadfast_client():
+    return SteadfastCourier.from_env()
+```
+
+### main.py (Option 2: With Config)
 
 ```python
 from fastapi import FastAPI, HTTPException, Depends

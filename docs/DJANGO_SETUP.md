@@ -27,9 +27,45 @@ python manage.py startapp courier  # Create a new app if needed
 
 ## Configuration
 
-### settings.py
+### .env File
+
+Create a `.env` file in your project root:
+
+```env
+STEADFAST_API_KEY=your-api-key
+STEADFAST_SECRET_KEY=your-secret-key
+STEADFAST_BASE_URL=https://portal.packzy.com/api/v1
+STEADFAST_TIMEOUT=30
+```
+
+Or copy the provided template:
+
+```bash
+cp .env.example .env
+```
+
+### settings.py (Option 1: Using from_env() - Recommended)
 
 ```python
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Your other Django settings...
+```
+
+Then in your views/services, use:
+
+```python
+from steadfast_courier import SteadfastCourier
+
+client = SteadfastCourier.from_env()
+```
+
+### settings.py (Option 2: Using decouple)
+
+````python
 import os
 from decouple import config
 
@@ -38,36 +74,6 @@ STEADFAST_API_KEY = config('STEADFAST_API_KEY', default='')
 STEADFAST_SECRET_KEY = config('STEADFAST_SECRET_KEY', default='')
 STEADFAST_BASE_URL = config('STEADFAST_BASE_URL', default='https://portal.packzy.com/api/v1')
 STEADFAST_TIMEOUT = config('STEADFAST_TIMEOUT', default=30, cast=int)
-
-# Optional: Configure logging
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'steadfast.log'),
-        },
-    },
-    'loggers': {
-        'steadfast_courier': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-    },
-}
-```
-
-### .env File
-
-```env
-STEADFAST_API_KEY=your-api-key
-STEADFAST_SECRET_KEY=your-secret-key
-STEADFAST_BASE_URL=https://portal.packzy.com/api/v1
-STEADFAST_TIMEOUT=30
-```
 
 ## Basic Usage
 
@@ -167,7 +173,7 @@ def get_balance(request):
             'success': False,
             'error': str(e)
         }, status=400)
-```
+````
 
 ### urls.py
 

@@ -29,33 +29,45 @@ pip install steadfast-courier
 Create a `.env` file in your project:
 
 ```env
-STEADFAST_API_KEY=your-api-key-here
-STEADFAST_SECRET_KEY=your-secret-key-here
+STEADFAST_API_KEY=your-api-key
+STEADFAST_SECRET_KEY=your-secret-key
+STEADFAST_BASE_URL=https://portal.packzy.com/api/v1
+STEADFAST_TIMEOUT=30
 ```
 
-Load environment variables:
+Alternatively, copy the provided `.env.example`:
 
-```python
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-api_key = os.getenv('STEADFAST_API_KEY')
-secret_key = os.getenv('STEADFAST_SECRET_KEY')
+```bash
+cp .env.example .env
 ```
+
+Then edit the `.env` file with your credentials.
 
 ## Basic Usage
 
-### Initialize the Client
+### Option 1: Initialize from Environment Variables (Recommended)
 
 ```python
 from steadfast_courier import SteadfastCourier
-import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Initialize client from environment variables
+client = SteadfastCourier.from_env()
+```
+
+### Option 2: Initialize with Explicit Credentials
+
+```python
+from steadfast_courier import SteadfastCourier
 
 client = SteadfastCourier(
-    api_key=os.getenv('STEADFAST_API_KEY'),
-    secret_key=os.getenv('STEADFAST_SECRET_KEY')
+    api_key='your-api-key',
+    secret_key='your-secret-key',
+    base_url='https://portal.packzy.com/api/v1',  # Optional
+    timeout=30  # Optional
 )
 ```
 

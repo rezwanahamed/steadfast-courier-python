@@ -1,6 +1,20 @@
 # Example: Django Integration
 
 ```python
+# settings.py
+# Add to your Django settings
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Your other settings...
+STEADFAST_API_KEY = os.getenv('STEADFAST_API_KEY')
+STEADFAST_SECRET_KEY = os.getenv('STEADFAST_SECRET_KEY')
+STEADFAST_BASE_URL = os.getenv('STEADFAST_BASE_URL')
+STEADFAST_TIMEOUT = int(os.getenv('STEADFAST_TIMEOUT', 30))
+
 # views.py
 import json
 
@@ -9,15 +23,13 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
+
 from steadfast_courier import SteadfastCourier, SteadfastException
 
 
 def get_steadfast_client():
-    """Initialize SteadFast client"""
-    return SteadfastCourier(
-        api_key=settings.STEADFAST_API_KEY,
-        secret_key=settings.STEADFAST_SECRET_KEY,
-    )
+    """Initialize SteadFast client from environment variables"""
+    return SteadfastCourier.from_env()
 
 @require_http_methods(["POST"])
 @csrf_exempt

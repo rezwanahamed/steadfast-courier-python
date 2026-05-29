@@ -27,27 +27,57 @@ pip install -e .
 
 ### 2. Configure Environment Variables
 
-Create `.env` file:
+Create `.env` file in your project root:
 
 ```env
-STEADFAST_API_KEY=your-api-key-here
-STEADFAST_SECRET_KEY=your-secret-key-here
+STEADFAST_API_KEY=your-api-key
+STEADFAST_SECRET_KEY=your-secret-key
+STEADFAST_BASE_URL=https://portal.packzy.com/api/v1
+STEADFAST_TIMEOUT=30
 ```
+
+Or copy the provided template:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` with your actual credentials.
 
 ### 3. Start Using the Package
 
-#### Basic Python
+#### Option 1: Using Environment Variables (Recommended)
 
 ```python
 from steadfast_courier import SteadfastCourier
-import os
 from dotenv import load_dotenv
 
+# Load environment variables from .env
 load_dotenv()
 
+# Initialize client from environment
+client = SteadfastCourier.from_env()
+
+# Create an order
+response = client.order().place_order({
+    'invoice': 'ORD-001',
+    'recipient_name': 'John Doe',
+    'recipient_phone': '01712345678',
+    'recipient_address': 'House 44, Gulshan, Dhaka',
+    'cod_amount': 1000.00,
+})
+
+print(f"Order created! Tracking: {response['consignment']['tracking_code']}")
+```
+
+#### Option 2: Using Explicit Credentials
+
+```python
+from steadfast_courier import SteadfastCourier
+
 client = SteadfastCourier(
-    api_key=os.getenv('STEADFAST_API_KEY'),
-    secret_key=os.getenv('STEADFAST_SECRET_KEY')
+    api_key='your-api-key',
+    secret_key='your-secret-key'
 )
 
 # Create an order
@@ -65,18 +95,14 @@ print(f"Order created! Tracking: {response['consignment']['tracking_code']}")
 #### With Django
 
 ```python
-# settings.py
-STEADFAST_API_KEY = 'your-api-key'
-STEADFAST_SECRET_KEY = 'your-secret-key'
+# settings.py - add this at the top
+from dotenv import load_dotenv
+load_dotenv()
 
-# views.py
+# In your views/services
 from steadfast_courier import SteadfastCourier
-from django.conf import settings
 
-client = SteadfastCourier(
-    api_key=settings.STEADFAST_API_KEY,
-    secret_key=settings.STEADFAST_SECRET_KEY
-)
+client = SteadfastCourier.from_env()
 ```
 
 #### With FastAPI
