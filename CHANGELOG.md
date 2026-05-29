@@ -2,6 +2,12 @@
 
 All notable changes to the SteadFast Courier Python package will be documented in this file.
 
+## [1.1.2] - 2026-05-29
+
+### Fixed
+
+- Fixed URL preparation in BaseApi to ensure `base_url` ends with a slash for proper API endpoint construction
+
 ## [1.1.1] - 2024-05-29
 
 ### Changed
